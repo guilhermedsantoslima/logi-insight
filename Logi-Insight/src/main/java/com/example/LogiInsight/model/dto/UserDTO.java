@@ -1,12 +1,11 @@
 package com.example.LogiInsight.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CNPJ;
 
 @Getter
 @Setter
@@ -20,7 +19,8 @@ public class UserDTO {
     private String sobrenome;
 
     @NotEmpty(message = "{campo.cnpj.obrigatorio}")
-    @CNPJ(message = "{campo.cnpj.invalido}")
+    @Pattern(regexp = "([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})",
+    message = "campo.cnpj.invalido")
     private String cnpj;
 
     @NotEmpty(message = "{campo.senha.obrigatorio}")

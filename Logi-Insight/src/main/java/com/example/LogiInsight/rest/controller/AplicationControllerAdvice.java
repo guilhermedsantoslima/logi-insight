@@ -1,5 +1,6 @@
 package com.example.LogiInsight.rest.controller;
 
+import com.example.LogiInsight.exception.InvalidLoginException;
 import com.example.LogiInsight.exception.NotFoundUserException;
 import com.example.LogiInsight.rest.ApiErrors;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class AplicationControllerAdvice {
     @ExceptionHandler(NotFoundUserException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrors handleNotFoundUserException(NotFoundUserException e){
+        return new ApiErrors(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidLoginException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiErrors handleINvalidLoginException(InvalidLoginException e){
         return new ApiErrors(e.getMessage());
     }
 }
