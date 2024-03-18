@@ -1,14 +1,11 @@
 package com.example.LogiInsight.rest.controller;
 
 import com.example.LogiInsight.exception.InvalidLoginException;
-import com.example.LogiInsight.service.impl.LoginServiceImpl;
+import com.example.LogiInsight.service.impl.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -16,8 +13,9 @@ import java.util.Map;
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    private LoginServiceImpl service;
+    private LoginService service;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) throws InvalidLoginException {
         String cnpj = loginData.get("cnpj");
@@ -29,4 +27,5 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login não autorizado");
         }
     }
+
 }
