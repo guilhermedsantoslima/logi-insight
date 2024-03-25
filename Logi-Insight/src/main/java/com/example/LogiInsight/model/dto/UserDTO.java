@@ -20,9 +20,11 @@ public class UserDTO {
 
     @NotEmpty(message = "{campo.cnpj.obrigatorio}")
     @Pattern(regexp = "([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})",
-    message = "campo.cnpj.invalido")
+    message = "{campo.cnpj.invalido}")
     private String cnpj;
 
     @NotEmpty(message = "{campo.senha.obrigatorio}")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$",
+             message = "{campo.senha.invalido}")
     private String senha;
 }
