@@ -1,5 +1,6 @@
 package com.example.LogiInsight.rest.controller;
 
+import com.example.LogiInsight.exception.CnpjAlreadyExistsException;
 import com.example.LogiInsight.exception.InvalidLoginException;
 import com.example.LogiInsight.exception.NotFoundUserException;
 import com.example.LogiInsight.rest.ApiErrors;
@@ -34,6 +35,12 @@ public class AplicationControllerAdvice {
     @ExceptionHandler(InvalidLoginException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiErrors handleINvalidLoginException(InvalidLoginException e){
+        return new ApiErrors(e.getMessage());
+    }
+
+    @ExceptionHandler(CnpjAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiErrors handleCnpjAlreadyExists(NotFoundUserException e){
         return new ApiErrors(e.getMessage());
     }
 }

@@ -1,12 +1,14 @@
 package com.example.LogiInsight.rest.controller;
 
 import com.example.LogiInsight.exception.InvalidLoginException;
+import com.example.LogiInsight.model.entity.LoginEntity;
 import com.example.LogiInsight.service.impl.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,4 +30,10 @@ public class LoginController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<LoginEntity> list(){
+        return service.listAll();
+    }
 }

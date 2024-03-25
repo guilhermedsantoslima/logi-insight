@@ -1,6 +1,7 @@
 package com.example.LogiInsight.service.impl;
 
 import com.example.LogiInsight.exception.InvalidLoginException;
+import com.example.LogiInsight.model.dto.UserDTO;
 import com.example.LogiInsight.model.entity.LoginEntity;
 import com.example.LogiInsight.model.entity.UserEntity;
 import com.example.LogiInsight.repository.LoginRepository;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LoginService {
@@ -28,7 +31,6 @@ public class LoginService {
         UserEntity user = repository.findByCnpj(cnpj);
 
         if (user != null && user.getSenha().equals(senha)) {
-            // Adiciona o usuário à tabela de usuários logados
             LoginEntity loggedInUser = new LoginEntity();
             loggedInUser.setUserId(user.getId());
             loggedInUser.setUsername(user.getSobrenome());
@@ -42,4 +44,8 @@ public class LoginService {
         }
     }
 
+    public List<LoginEntity> listAll() {
+        List<LoginEntity> loginEntities = loginRepository.findAll();
+        return loginEntities;
+    }
 }

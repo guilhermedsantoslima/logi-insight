@@ -1,5 +1,7 @@
 package com.example.LogiInsight.service.impl;
 
+import com.example.LogiInsight.exception.CnpjAlreadyExistsException;
+import com.example.LogiInsight.exception.NotFoundUserException;
 import com.example.LogiInsight.model.dto.UserDTO;
 import com.example.LogiInsight.model.entity.UserEntity;
 import com.example.LogiInsight.repository.UserRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,7 +19,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
+    public UserDTO saveUser(UserDTO userDTO)throws CnpjAlreadyExistsException {
+        UserEntity userCnpj = repository.findByCnpj(userDTO.getCnpj());
+        if (userCnpj != null) {
+            throw new CnpjAlreadyExistsException();
+        }
+
+        UserEntity existingUserByPassword = repository.findBySenha(userDTO.getSenha());
+        if (existingUserByPassword != null) {
+            throw new RuntimeException("Essa senha já existe");
+        }
         UserEntity user = new UserEntity();
 
         user.setNome(userDTO.getNome());
@@ -47,4 +59,20 @@ public class UserServiceImpl implements UserService {
 
         return userDTOS;
     }
+
+    @Override
+    public Optional<UserEntity> getById(Long id)throws NotFoundUserException {
+        Optional<UserEntity> userEntities = repository.findById(id);
+
+        if(!userEntities.isPresent()){
+           throw new NotFoundUserException();
+        }
+        return repository.findById(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
 }

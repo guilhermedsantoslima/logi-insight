@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findByCnpj(String cnpj);
+    UserEntity findBySenha(String senha);
 }
