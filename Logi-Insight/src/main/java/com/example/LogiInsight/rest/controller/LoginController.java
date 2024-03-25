@@ -1,7 +1,9 @@
 package com.example.LogiInsight.rest.controller;
 
 import com.example.LogiInsight.exception.InvalidLoginException;
+import com.example.LogiInsight.exception.NotFoundUserException;
 import com.example.LogiInsight.model.entity.LoginEntity;
+import com.example.LogiInsight.model.entity.UserEntity;
 import com.example.LogiInsight.service.impl.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/login")
@@ -35,5 +38,12 @@ public class LoginController {
     @ResponseStatus(HttpStatus.OK)
     public List<LoginEntity> list(){
         return service.listAll();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<LoginEntity> getUserById(@PathVariable("id") Long id) throws NotFoundUserException {
+        return service.getById(id);
     }
 }
