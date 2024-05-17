@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +21,6 @@ public class LoginService {
     @Autowired
     private LoginRepository loginRepository;
 
-    /*
-    public boolean login(String cnpj, String senha) throws InvalidLoginException {
-        UserEntity user = repository.findByCnpj(cnpj);
-
-        return user != null && user.getSenha().equals(senha);
-    }
-    */
     public boolean login(String cnpj, String senha) throws InvalidLoginException {
         UserEntity user = repository.findByCnpj(cnpj);
 

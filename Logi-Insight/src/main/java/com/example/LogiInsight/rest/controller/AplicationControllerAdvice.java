@@ -2,6 +2,7 @@ package com.example.LogiInsight.rest.controller;
 
 import com.example.LogiInsight.exception.CnpjAlreadyExistsException;
 import com.example.LogiInsight.exception.InvalidLoginException;
+import com.example.LogiInsight.exception.NotFoundProductException;
 import com.example.LogiInsight.exception.NotFoundUserException;
 import com.example.LogiInsight.rest.ApiErrors;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,12 @@ public class AplicationControllerAdvice {
     @ExceptionHandler(CnpjAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrors handleCnpjAlreadyExists(NotFoundUserException e){
+        return new ApiErrors(e.getMessage());
+    }
+
+    @ExceptionHandler(NotFoundProductException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiErrors handleNotFoundProductException(NotFoundProductException e){
         return new ApiErrors(e.getMessage());
     }
 }
